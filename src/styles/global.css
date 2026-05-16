@@ -1,0 +1,137 @@
+/*
+  New Meat — Newspaper Style
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+	--cream: #f7f5ef;
+	--black: 15, 15, 15;
+	--gray: 100, 100, 100;
+	--gray-light: 220, 218, 213;
+	--accent: #1f6f55;
+	--accent-dark: #114637;
+}
+
+body {
+	font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+	margin: 0;
+	padding: 0;
+	background: var(--cream);
+	color: rgb(var(--black));
+	font-size: 18px;
+	line-height: 1.6;
+}
+
+main {
+	width: 900px;
+	max-width: calc(100% - 2em);
+	margin: auto;
+	padding: 0 1em 3em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Playfair Display', Georgia, serif;
+	margin: 0 0 0.5rem 0;
+	color: rgb(var(--black));
+	line-height: 1.1;
+}
+
+h1 { font-size: 3.5em; font-weight: 900; }
+h2 { font-size: 2.2em; font-weight: 700; }
+h3 { font-size: 1.6em; font-weight: 700; }
+h4 { font-size: 1.3em; font-weight: 600; }
+
+a {
+	color: rgb(var(--black));
+	text-decoration: none;
+}
+
+a:hover {
+	color: var(--accent);
+}
+
+p {
+	margin-bottom: 1em;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Newspaper divider lines */
+.divider-double {
+	border: none;
+	border-top: 3px double rgb(var(--black));
+	margin: 0;
+}
+
+.divider-single {
+	border: none;
+	border-top: 1px solid rgb(var(--black));
+	margin: 0;
+}
+
+/* Category labels */
+.category-label {
+	font-family: 'Source Serif 4', serif;
+	font-size: 0.7em;
+	text-transform: uppercase;
+	letter-spacing: 0.15em;
+	color: var(--accent);
+	margin-bottom: 0.3em;
+	display: block;
+}
+
+/* Drop cap for first paragraph */
+.drop-cap::first-letter {
+	float: left;
+	font-family: 'Playfair Display', serif;
+	font-size: 4.5em;
+	line-height: 0.8;
+	padding-right: 0.1em;
+	font-weight: 700;
+}
+
+code {
+	padding: 2px 5px;
+	background-color: rgb(var(--gray-light));
+	border-radius: 2px;
+	font-size: 0.9em;
+}
+
+pre {
+	padding: 1.5em;
+	background: rgb(var(--gray-light));
+	overflow-x: auto;
+}
+
+blockquote {
+	border-left: 3px solid rgb(var(--black));
+	padding: 0 0 0 1.5em;
+	margin: 1.5em 0;
+	font-style: italic;
+}
+
+@media (max-width: 720px) {
+	body {
+		font-size: 16px;
+	}
+	main {
+		padding: 0 1em 2em;
+	}
+	h1 {
+		font-size: 2.5em;
+	}
+}
+
+.sr-only {
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	white-space: nowrap;
+}

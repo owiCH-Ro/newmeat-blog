@@ -1,0 +1,257 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const today = new Date();
+const dayNames = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+const monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+const formattedDate = `${dayNames[today.getDay()]}, ${today.getDate()}. ${monthNames[today.getMonth()]} ${today.getFullYear()}`;
+
+const launchDate = new Date('2026-05-16');
+const issueNumber = Math.floor((today.getTime() - launchDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+---
+
+<!doctype html>
+<html lang="de">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			/* Masthead */
+			.masthead {
+				text-align: center;
+				padding: 1.5rem 0 1rem;
+			}
+			.masthead-top {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-size: 0.75rem;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				color: #666;
+				margin-bottom: 0.5rem;
+			}
+			.masthead-title {
+				font-family: 'Playfair Display', Georgia, serif;
+				font-size: 5rem;
+				font-weight: 900;
+				letter-spacing: -0.02em;
+				margin: 0;
+				line-height: 1;
+			}
+			.masthead-subtitle {
+				font-size: 0.85rem;
+				text-transform: uppercase;
+				letter-spacing: 0.25em;
+				color: #666;
+				margin-top: 0.3rem;
+			}
+
+			/* Dividers */
+			.divider-double {
+				border: none;
+				border-top: 3px double #111;
+				margin: 1rem 0;
+			}
+			.divider-single {
+				border: none;
+				border-top: 1px solid #111;
+				margin: 0.5rem 0;
+			}
+
+			/* Hero section */
+			.hero-section {
+				text-align: center;
+				padding: 2rem 0;
+			}
+			.hero-headline {
+				font-family: 'Playfair Display', Georgia, serif;
+				font-size: 2.8rem;
+				font-weight: 900;
+				line-height: 1.1;
+				margin: 0 0 1rem;
+			}
+			.hero-subline {
+				font-style: italic;
+				font-size: 1.1rem;
+				color: #444;
+				max-width: 600px;
+				margin: 0 auto;
+			}
+			.hero-image {
+				display: block;
+				width: min(100%, 860px);
+				aspect-ratio: 16 / 9;
+				object-fit: cover;
+				margin: 0 auto 1.5rem;
+				border: 1px solid #d8d3c8;
+			}
+
+			/* Articles grid */
+			.articles-grid {
+				display: grid;
+				grid-template-columns: 2fr 1fr;
+				gap: 2rem;
+				margin-top: 1.5rem;
+			}
+			.main-article {
+				border-right: 1px solid #ccc;
+				padding-right: 2rem;
+			}
+			.sidebar-articles {
+				display: flex;
+				flex-direction: column;
+				gap: 1.5rem;
+			}
+
+			/* Article styles */
+			.category-label {
+				font-size: 0.7rem;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				color: #8b0000;
+				margin-bottom: 0.3rem;
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+			}
+			.category-label::before,
+			.category-label::after {
+				content: '';
+				width: 1.5rem;
+				height: 1px;
+				background: #8b0000;
+			}
+			.article-title {
+				font-family: 'Playfair Display', Georgia, serif;
+				font-size: 1.8rem;
+				font-weight: 700;
+				line-height: 1.15;
+				margin: 0.3rem 0 0.8rem;
+			}
+			.article-title a {
+				color: inherit;
+				text-decoration: none;
+			}
+			.article-title a:hover {
+				color: #8b0000;
+			}
+			.article-excerpt {
+				font-size: 1rem;
+				line-height: 1.6;
+				color: #333;
+			}
+			.article-excerpt::first-letter {
+				float: left;
+				font-family: 'Playfair Display', serif;
+				font-size: 4rem;
+				line-height: 0.8;
+				padding-right: 0.1em;
+				font-weight: 700;
+			}
+			.article-date {
+				font-size: 0.8rem;
+				color: #888;
+				margin-top: 0.5rem;
+			}
+
+			/* Sidebar article */
+			.sidebar-article .article-title {
+				font-size: 1.1rem;
+			}
+			.sidebar-article .article-excerpt {
+				font-size: 0.9rem;
+			}
+			.sidebar-article .article-excerpt::first-letter {
+				float: none;
+				font-size: inherit;
+			}
+
+			/* Responsive */
+			@media (max-width: 720px) {
+				.masthead-title {
+					font-size: 3rem;
+				}
+				.hero-headline {
+					font-size: 1.8rem;
+				}
+				.articles-grid {
+					grid-template-columns: 1fr;
+				}
+				.main-article {
+					border-right: none;
+					padding-right: 0;
+					border-bottom: 1px solid #ccc;
+					padding-bottom: 1.5rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<!-- Masthead -->
+			<header class="masthead">
+				<div class="masthead-top">
+					<span>EST. 2026</span>
+					<span>Ausgabe {issueNumber}</span>
+					<span>{formattedDate}</span>
+				</div>
+				<h1 class="masthead-title">NEW MEAT</h1>
+				<p class="masthead-subtitle">Clean Meat & Future Food</p>
+			</header>
+
+			<hr class="divider-double" />
+
+			<!-- Hero Section -->
+			<section class="hero-section">
+				<img class="hero-image" src="/newmeat-hero.png" alt="Editoriales Motiv zu kultiviertem Fleisch und Future Food" />
+				<h2 class="hero-headline">Kultiviertes Fleisch<br/>kommt näher an den Markt</h2>
+				<p class="hero-subline">Wöchentlich kuratierte News zu Clean Meat, alternativen Proteinen, Regulierung, Produktion und Schweizer Marktchancen.</p>
+			</section>
+
+			<hr class="divider-single" />
+
+			<!-- Articles -->
+			{posts.length > 0 && (
+				<section class="articles-grid">
+					<!-- Main article -->
+					<article class="main-article">
+						<span class="category-label">Clean Meat Weekly</span>
+						<h3 class="article-title">
+							<a href={`/blog/${posts[0].id}/`}>{posts[0].data.title}</a>
+						</h3>
+						<p class="article-excerpt">
+							{posts[0].data.description}
+						</p>
+						<p class="article-date">
+							<FormattedDate date={posts[0].data.pubDate} />
+						</p>
+					</article>
+
+					<!-- Sidebar articles -->
+					<aside class="sidebar-articles">
+						{posts.slice(1, 4).map((post) => (
+							<article class="sidebar-article">
+								<span class="category-label" style="font-size: 0.65rem;">Briefing</span>
+								<h3 class="article-title">
+									<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+								</h3>
+								<p class="article-excerpt">{post.data.description?.substring(0, 100)}...</p>
+							</article>
+						))}
+					</aside>
+				</section>
+			)}
+
+			<hr class="divider-double" style="margin-top: 2rem;" />
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,32 @@
+---
+const today = new Date();
+---
+
+<footer>
+	<hr class="divider-single" />
+	<p>&copy; {today.getFullYear()} New Meat — Schweizer Briefing zu kultiviertem Fleisch und Future Food</p>
+	<p class="contact-link"><a href="mailto:admin@oliverwidmer.net">Kontakt</a></p>
+</footer>
+<style>
+	footer {
+		padding: 1rem 0 2rem;
+		text-align: center;
+		font-size: 0.85rem;
+		color: #666;
+	}
+	.contact-link {
+		margin-top: 0.4rem;
+	}
+	.contact-link a {
+		color: var(--accent);
+		text-decoration: none;
+	}
+	.contact-link a:hover {
+		text-decoration: underline;
+	}
+	.divider-single {
+		border: none;
+		border-top: 1px solid #111;
+		margin: 0 0 1rem 0;
+	}
+</style>
